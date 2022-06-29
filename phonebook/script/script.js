@@ -88,6 +88,7 @@ const data = [
         <th>Имя</th>
         <th>Фамилия</th>
         <th>Телефон</th>
+        <th>Изменить</th>
       </tr>
     `);
 
@@ -210,7 +211,13 @@ const data = [
     tr.phoneLink = phoneLink;
     tdPhone.append(phoneLink);
 
-    tr.append(tdDel, tdName, tdSurname, tdPhone);
+    const tdEdit = document.createElement('td');
+    const tdButton = document.createElement('button');
+    tdButton.type = 'button';
+    tdButton.classList.add('btn-edit');
+    tdEdit.append(tdButton);
+
+    tr.append(tdDel, tdName, tdSurname, tdPhone, tdEdit);
 
     return tr;
   };

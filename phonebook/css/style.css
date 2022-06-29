@@ -130,3 +130,14 @@ body {
   color: #fff;
   text-align: center;
 }
+
+.btn-edit {
+  width: 20px;
+  height: 20px;
+  background-image: url('../img/change.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: 0;
+  background-color: transparent;
+}
