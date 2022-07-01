@@ -85,8 +85,8 @@ const data = [
     thead.insertAdjacentHTML('beforeend', `
       <tr>
         <th class="delete">Удалить</th>
-        <th class="sorting sorting_name">Имя</th>
-        <th class="sorting sorting_surname">Фамилия</th>
+        <th class="sorting">Имя</th>
+        <th class="sorting">Фамилия</th>
         <th>Телефон</th>
         <th>Изменить</th>
       </tr>
@@ -254,7 +254,7 @@ const data = [
       btnAdd,
       formOverlay,
       btnDel,
-      // listHead,
+      listHead,
     } = phoneBook;
 
     // Функционал
@@ -289,6 +289,43 @@ const data = [
       if (e.target.closest('.del-icon')) {
         e.target.closest('.contact').remove();
       }
+    });
+
+
+    // Сортировка
+
+    const headers = listHead.querySelectorAll('th');
+
+    const sortColumn = (index, tbody) => {
+      const rows = tbody.querySelectorAll('.contact');
+      const newRows = Array.from(rows);
+      newRows.sort((rowA, rowB) => {
+        const cellA = rowA.querySelectorAll('td')[index].innerHTML;
+        const cellB = rowB.querySelectorAll('td')[index].innerHTML;
+
+        switch (true) {
+          case cellA > cellB: return 1;
+          case cellA < cellB: return -1;
+          case cellA === cellB: return 0;
+        }
+      });
+
+      rows.forEach(row => {
+        tbody.removeChild(row);
+      });
+
+      newRows.forEach(newRow => {
+        tbody.appendChild(newRow);
+      });
+    };
+
+    headers.forEach((header, index) => {
+      header.addEventListener('click', (e) => {
+        const target = e.target;
+        if (target.classList.contains('sorting')) {
+          sortColumn(index, list);
+        }
+      });
     });
   };
 
