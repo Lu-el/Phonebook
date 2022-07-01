@@ -2,6 +2,11 @@
 
 const data = [
   {
+    name: 'Мария',
+    surname: 'Попова',
+    phone: '+79876543210',
+  },
+  {
     name: 'Иван',
     surname: 'Петров',
     phone: '+79514545454',
@@ -15,11 +20,6 @@ const data = [
     name: 'Семён',
     surname: 'Иванов',
     phone: '+79800252525',
-  },
-  {
-    name: 'Мария',
-    surname: 'Попова',
-    phone: '+79876543210',
   },
 ];
 
@@ -85,8 +85,8 @@ const data = [
     thead.insertAdjacentHTML('beforeend', `
       <tr>
         <th class="delete">Удалить</th>
-        <th>Имя</th>
-        <th>Фамилия</th>
+        <th class="sorting sorting_name">Имя</th>
+        <th class="sorting sorting_surname">Фамилия</th>
         <th>Телефон</th>
         <th>Изменить</th>
       </tr>
@@ -96,6 +96,7 @@ const data = [
 
     table.append(thead, tbody);
     table.tbody = tbody;
+    table.thead = thead;
 
     return table;
   };
@@ -182,6 +183,7 @@ const data = [
 
     return {
       list: table.tbody,
+      listHead: table.thead,
       logo,
       btnAdd: buttonGroup.btns[0],
       btnDel: buttonGroup.btns[1],
@@ -252,6 +254,7 @@ const data = [
       btnAdd,
       formOverlay,
       btnDel,
+      // listHead,
     } = phoneBook;
 
     // Функционал
