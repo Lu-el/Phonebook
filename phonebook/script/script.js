@@ -310,10 +310,6 @@ const data = [
         }
       });
 
-      rows.forEach(row => {
-        tbody.removeChild(row);
-      });
-
       newRows.forEach(newRow => {
         tbody.appendChild(newRow);
       });
