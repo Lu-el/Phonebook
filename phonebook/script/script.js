@@ -1,32 +1,54 @@
 'use strict';
 
-const data = [
-  {
-    name: 'Мария',
-    surname: 'Попова',
-    phone: '+79876543210',
-  },
-  {
-    name: 'Иван',
-    surname: 'Петров',
-    phone: '+79514545454',
-  },
-  {
-    name: 'Игорь',
-    surname: 'Семёнов',
-    phone: '+79999999999',
-  },
-  {
-    name: 'Семён',
-    surname: 'Иванов',
-    phone: '+79800252525',
-  },
-];
+// const data = [
+//   {
+//     name: 'Мария',
+//     surname: 'Попова',
+//     phone: '+79876543210',
+//   },
+//   {
+//     name: 'Иван',
+//     surname: 'Петров',
+//     phone: '+79514545454',
+//   },
+//   {
+//     name: 'Игорь',
+//     surname: 'Семёнов',
+//     phone: '+79999999999',
+//   },
+//   {
+//     name: 'Семён',
+//     surname: 'Иванов',
+//     phone: '+79800252525',
+//   },
+// ];
 
 {
-  const addContactData = (contact) => {
-    data.push(contact);
-    console.log(data);
+// Сохранение
+// localStorage.setItem('phonebook', JSON.stringify(data));
+
+  const getStorage = (key) => JSON.parse(localStorage.getItem(key)) || [];
+
+  const removeStorage = (phone) => {
+    const data = getStorage('phonebook');
+    const indexData = data.findIndex(elem => elem.phone === phone.toString());
+    if (indexData >= 0) {
+      data.splice(indexData, 1);
+      localStorage.removeItem('phonebook');
+      localStorage.setItem('phonebook', JSON.stringify(data));
+    }
+  };
+
+  const setStorage = (key, newContact) => {
+    const data = getStorage(key);
+    data.push(newContact);
+    localStorage.removeItem(key);
+    localStorage.setItem(key, JSON.stringify(data));
+  };
+
+  const addContactData = (contact, key) => {
+    setStorage(key, contact);
+    // push(contact);
   };
 
   const createContainer = () => {
@@ -231,7 +253,8 @@ const data = [
     return tr;
   };
 
-  const renderContacts = (elem, data) => {
+  const renderContacts = (elem, key) => {
+    const data = getStorage(key);
     const allRow = data.map(createRow);
     elem.append(...allRow);
     return allRow;
@@ -288,6 +311,8 @@ const data = [
 
     list.addEventListener('click', e => {
       if (e.target.closest('.del-icon')) {
+        const phone = e.target.closest('.contact').phoneLink.textContent;
+        removeStorage(phone);
         e.target.closest('.contact').remove();
       }
     });
@@ -304,7 +329,7 @@ const data = [
 
       const mewContact = Object.fromEntries(formData);
       addContactPage(mewContact, list);
-      addContactData(mewContact);
+      addContactData(mewContact, 'phonebook');
       form.reset();
       closeModal();
     });
@@ -322,15 +347,6 @@ const data = [
       btnDel,
       listHead,
     } = renderPhoneBook(app, title);
-
-    // Функционал
-
-    const allRow = renderContacts(list, data);
-    const {closeModal} = modalControl(btnAdd, formOverlay);
-
-    hoverRow(allRow, logo);
-    deleteControl(btnDel, list);
-    formControl(form, list, closeModal);
 
     // Сортировка
 
@@ -350,6 +366,7 @@ const data = [
         }
       });
 
+      localStorage.setItem('sort', index);
       newRows.forEach(newRow => {
         tbody.appendChild(newRow);
       });
@@ -363,7 +380,16 @@ const data = [
         }
       });
     });
-  };
 
+    // Функционал
+
+    const allRow = renderContacts(list, 'phonebook');
+    const {closeModal} = modalControl(btnAdd, formOverlay);
+    sortColumn(localStorage.getItem('sort'), list);
+
+    hoverRow(allRow, logo);
+    deleteControl(btnDel, list);
+    formControl(form, list, closeModal);
+  };
   window.phoneBookInit = init;
 }
