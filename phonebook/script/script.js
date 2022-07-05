@@ -314,6 +314,14 @@
       form.reset();
       closeModal();
     });
+
+    form.addEventListener('click', e => {
+      const target = e.target;
+      if (target.closest('.btn-danger')) {
+        form.reset();
+        closeModal();
+      }
+    });
   };
 
   const init = (selectorApp, title) => {
