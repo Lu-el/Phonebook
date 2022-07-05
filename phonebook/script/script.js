@@ -315,12 +315,9 @@
       closeModal();
     });
 
-    form.addEventListener('click', e => {
-      const target = e.target;
-      if (target.closest('.btn-danger')) {
-        form.reset();
-        closeModal();
-      }
+    form.addEventListener('reset', e => {
+      form.reset();
+      closeModal();
     });
   };
 
