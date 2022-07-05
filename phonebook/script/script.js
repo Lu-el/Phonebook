@@ -1,32 +1,6 @@
 'use strict';
 
-// const data = [
-//   {
-//     name: 'Мария',
-//     surname: 'Попова',
-//     phone: '+79876543210',
-//   },
-//   {
-//     name: 'Иван',
-//     surname: 'Петров',
-//     phone: '+79514545454',
-//   },
-//   {
-//     name: 'Игорь',
-//     surname: 'Семёнов',
-//     phone: '+79999999999',
-//   },
-//   {
-//     name: 'Семён',
-//     surname: 'Иванов',
-//     phone: '+79800252525',
-//   },
-// ];
-
 {
-// Сохранение
-// localStorage.setItem('phonebook', JSON.stringify(data));
-
   const getStorage = (key) => JSON.parse(localStorage.getItem(key)) || [];
 
   const removeStorage = (phone) => {
@@ -48,7 +22,6 @@
 
   const addContactData = (contact, key) => {
     setStorage(key, contact);
-    // push(contact);
   };
 
   const createContainer = () => {
@@ -318,18 +291,26 @@
     });
   };
 
-  const addContactPage = (newContact, list) => {
+  const addContactPage = (newContact, list, listHead) => {
     list.append(createRow(newContact));
+    const btnDel = listHead.querySelector('.delete');
+    if (btnDel.classList.contains('is-visible')) {
+      list.querySelectorAll('.delete').forEach(btn => {
+        if (!(btn.classList.contains('is-visible'))) {
+          btn.classList.add('is-visible');
+        }
+      });
+    }
   };
 
-  const formControl = (form, list, closeModal) => {
+  const formControl = (form, list, listHead, closeModal) => {
     form.addEventListener('submit', e => {
       e.preventDefault();
       const formData = new FormData(e.target);
 
-      const mewContact = Object.fromEntries(formData);
-      addContactPage(mewContact, list);
-      addContactData(mewContact, 'phonebook');
+      const newContact = Object.fromEntries(formData);
+      addContactPage(newContact, list, listHead);
+      addContactData(newContact, 'phonebook');
       form.reset();
       closeModal();
     });
@@ -389,7 +370,7 @@
 
     hoverRow(allRow, logo);
     deleteControl(btnDel, list);
-    formControl(form, list, closeModal);
+    formControl(form, list, listHead, closeModal);
   };
   window.phoneBookInit = init;
 }
