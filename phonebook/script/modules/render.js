@@ -1,5 +1,6 @@
 
-import storage from './serviceStorage.js';
+// import storage from './serviceStorage.js';
+import * as storage from './serviceStorage.js';
 import creatElements from './createElemenst.js';
 
 const {getStorage} = storage;

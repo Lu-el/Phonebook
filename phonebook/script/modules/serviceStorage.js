@@ -1,6 +1,6 @@
-const getStorage = (key) => JSON.parse(localStorage.getItem(key)) || [];
+export const getStorage = (key) => JSON.parse(localStorage.getItem(key)) || [];
 
-const removeStorage = (phone) => {
+export const removeStorage = (phone) => {
   const data = getStorage('phonebook');
   const indexData = data.findIndex(elem => elem.phone === phone.toString());
   if (indexData >= 0) {
@@ -17,13 +17,7 @@ const setStorage = (key, newContact) => {
   localStorage.setItem(key, JSON.stringify(data));
 };
 
-const addContactData = (contact, key) => {
+export const addContactData = (contact, key) => {
   setStorage(key, contact);
 };
 
-export default {
-  getStorage,
-  removeStorage,
-  setStorage,
-  addContactData,
-};
