@@ -1,5 +1,8 @@
-'use strict';
 
+import storage from './serviceStorage.js';
+import creatElements from './createElemenst.js';
+
+const {getStorage} = storage;
 const {
   createHeader,
   createLogo,
@@ -9,13 +12,9 @@ const {
   createForm,
   createFooter,
   createRow,
-} = require('./modules/createElemenst');
+} = creatElements;
 
-const {
-  getStorage,
-} = require('./modules/serviceStorage.js');
-
-const renderPhoneBook = (app, title) => {
+export const renderPhoneBook = (app, title) => {
   const header = createHeader();
   const logo = createLogo(title);
   const main = createMain();
@@ -50,14 +49,10 @@ const renderPhoneBook = (app, title) => {
   };
 };
 
-const renderContacts = (elem, key) => {
+export const renderContacts = (elem, key) => {
   const data = getStorage(key);
   const allRow = data.map(createRow);
   elem.append(...allRow);
   return allRow;
 };
 
-module.exports = {
-  renderPhoneBook,
-  renderContacts,
-};

@@ -1,15 +1,11 @@
-'use strict';
+import control from './modules/control.js';
+import {renderPhoneBook, renderContacts} from './modules/render.js';
 
 const {
   modalControl,
   deleteControl,
   formControl,
-} = require('./modules/control');
-
-const {
-  renderPhoneBook,
-  renderContacts,
-} = require('./modules/render.js');
+} = control;
 
 {
   const hoverRow = (allRow, logo) => {

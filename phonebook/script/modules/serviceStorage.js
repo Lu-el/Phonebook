@@ -1,5 +1,3 @@
-'use strict';
-
 const getStorage = (key) => JSON.parse(localStorage.getItem(key)) || [];
 
 const removeStorage = (phone) => {
@@ -23,7 +21,7 @@ const addContactData = (contact, key) => {
   setStorage(key, contact);
 };
 
-module.exports = {
+export default {
   getStorage,
   removeStorage,
   setStorage,

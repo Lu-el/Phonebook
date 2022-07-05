@@ -1,13 +1,7 @@
-'use strict';
+import creatElements from './createElemenst.js';
+import * as storage from './serviceStorage.js';
 
-const {
-  createRow,
-} = require('./modules/createElemenst');
-
-const {
-  removeStorage,
-  addContactData,
-} = require('./modules/serviceStorage.js');
+const {createRow} = creatElements;
 
 const modalControl = (btnAdd, formOverlay) => {
   const openModal = () => {
@@ -49,7 +43,7 @@ const deleteControl = (btnDel, list) => {
   list.addEventListener('click', e => {
     if (e.target.closest('.del-icon')) {
       const phone = e.target.closest('.contact').phoneLink.textContent;
-      removeStorage(phone);
+      storage.removeStorage(phone);
       e.target.closest('.contact').remove();
     }
   });
@@ -74,7 +68,7 @@ const formControl = (form, list, listHead, closeModal) => {
 
     const newContact = Object.fromEntries(formData);
     addContactPage(newContact, list, listHead);
-    addContactData(newContact, 'phonebook');
+    storage.addContactData(newContact, 'phonebook');
     form.reset();
     closeModal();
   });
@@ -85,7 +79,7 @@ const formControl = (form, list, listHead, closeModal) => {
   });
 };
 
-module.exports = {
+export default {
   modalControl,
   deleteControl,
   addContactPage,
